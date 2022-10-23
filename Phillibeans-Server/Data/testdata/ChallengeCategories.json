@@ -1,0 +1,10 @@
+{
+	"User": {
+		"id": 0,
+		"name": "myName",
+		"email": "email@123.com",
+		"password": "password",
+		"createdAt": "10-17-2022",
+		"imageURL": "dir/image/name"
+	}
+}
