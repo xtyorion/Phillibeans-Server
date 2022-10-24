@@ -1,15 +1,23 @@
-﻿namespace Phillibeans_Server.Models
+﻿using MongoDB.Bson;
+using System.Text.Json.Serialization;
+
+namespace Phillibeans_Server.Models
 {
-    public class Language
+    public class Language : IDocument
     {
-        public int id { get; set; }
+        [JsonPropertyName("id")]
+        public ObjectId Id { get; set; }
+
+        [JsonPropertyName("createdat")]
+        public DateTime CreatedAt => Id.CreationTime;
+        public int LangId { get; set; }
         public string Name { get; set; }
 
         static int NextId = 0;
 
         public Language()
         {
-            id = NextId++;
+            LangId = NextId++;
         }
 
     }

@@ -4,6 +4,8 @@ using MongoDB.Driver;
 using Newtonsoft.Json;
 using Phillibeans_Server.Models;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson.Serialization;
+using Phillibeans_Server.Data.Repositories;
 
 namespace Phillibeans_Server
 {
@@ -12,31 +14,24 @@ namespace Phillibeans_Server
     public class UserController : ControllerBase
     {
         private readonly PhillibeansDbContext _db;
+        private readonly UserRepository _userRepository;
 
-        public UserController(PhillibeansDbContext db)
+        public UserController(PhillibeansDbContext db, UserRepository userRepository)
         {
             this._db = db;
+            this._userRepository = userRepository;
             db.setCollection("User");
         }
 
         string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
-        //[HttpGet]
-        //[Route("{email}")]
-        //public BsonDocument Get()
-        //{
-        //    string email = "email22@123.com";
-        //    var filter = Builders<BsonDocument>.Filter.Eq("User.Email", email);
-        //    var userAlreadyExists = _db.getCollection().Find(filter).FirstOrDefault();
-        //    return userAlreadyExists;
-        //}
         [HttpGet]
         [Route("{id}")]
-        public Task<string> GetAsync([FromRoute] int id) 
+        public Task<string> GetAsync([FromRoute] int id)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq("User._id", id);
-            var user = _db.getCollection().Find(filter).ToList().ToJson();
+            var userDoc = _userRepository.GetById(id);
+            var user = BsonSerializer.Deserialize<User>(userDoc).ToJson();
             return Task.FromResult(user);
+
         }
 
 

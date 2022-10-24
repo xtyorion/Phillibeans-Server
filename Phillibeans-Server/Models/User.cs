@@ -10,10 +10,19 @@ namespace Phillibeans_Server.Models
         public User User { get; set; }
     }
 
-    public class User
+    public class User : IDocument
     {
-        [JsonPropertyName("_id")]
+        public static int nextId = 0;
+
+        [JsonPropertyName("id")]
         public ObjectId Id { get; set; }
+
+        [JsonPropertyName("createdat")]
+        public DateTime CreatedAt => Id.CreationTime;
+
+        [JsonPropertyName("userid")]
+        public int UserId = nextId++;
+
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
@@ -21,16 +30,15 @@ namespace Phillibeans_Server.Models
         public string Email { get; set; }
 
         [JsonPropertyName("passwordHash")]
-        public byte[] PasswordHash { get; set; }        
-        
+        public byte[] PasswordHash { get; set; }
+
         [JsonPropertyName("passwordSalt")]
         public byte[] PasswordSalt { get; set; }
 
-        [JsonPropertyName("createdAt")]
-        public string CreatedAt { get; set; }
-
         [JsonPropertyName("imageURL")]
         public string ImageURL { get; set; }
+
+
     }
 
 }

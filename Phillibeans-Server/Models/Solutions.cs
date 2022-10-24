@@ -1,8 +1,17 @@
-﻿namespace Phillibeans_Server.Models
+﻿using MongoDB.Bson;
+using System.Text.Json.Serialization;
+
+namespace Phillibeans_Server.Models
 {
-    public class Solutions
+    public class Solutions : IDocument
     {
-        public int id { get; set; }
+
+        [JsonPropertyName("id")]
+        public ObjectId Id { get; set; }
+
+        [JsonPropertyName("createdat")]
+        public DateTime CreatedAt => Id.CreationTime;
+        public int SolutionId { get; set; }
         public int Challengeid { get; set; }
         public string vidSolutionURL { get; set; }
         public int LangTypeId { get; set; }
@@ -12,7 +21,7 @@
 
         public Solutions()
         {
-            id = NextId++;
+            SolutionId = NextId++;
         }
 
     }

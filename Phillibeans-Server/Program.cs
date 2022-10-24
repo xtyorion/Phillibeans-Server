@@ -1,4 +1,5 @@
 using Phillibeans_Server;
+using Phillibeans_Server.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,8 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 }));
 
 builder.Services.AddSingleton<PhillibeansDbContext>(new PhillibeansDbContext());
-//builder.Services.AddControllers();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
