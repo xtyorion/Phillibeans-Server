@@ -56,29 +56,9 @@ namespace Phillibeans_Server.Controllers
             var filter = Builders<BsonDocument>.Filter.Eq("Email", email);
             var resultdoc = _db.getCollection().Find(filter).FirstOrDefault();
             
+
             user = BsonSerializer.Deserialize<User>(resultdoc);
            
-            /*  var userAlreadyExists = _db.getCollection().Find(filter);
-              var resultdoc = userAlreadyExists.FirstOrDefault();
-              var pHash = resultdoc["PasswordHash"].AsBsonArray.Select(p => p.AsString).ToArray();*/
-            //var pHash = resultdoc.GetElement("PasswordHash");
-            //string pSalt = resultdoc.GetValue("PasswordSalt").ToString();
-            //char[] hash = new char[pHash.Length];
-            //for (int i = 0; i < pHash.Length; i++)
-            //{
-            //    hash[i] = pHash[i];
-            //}
-            //char[] salt = new char[pSalt.Length];
-            //for (int i = 0; i < pSalt.Length; i++)
-            //{
-            //    salt[i] = pSalt[i];
-            //}
-
-            //var passHash = hash.Select(c => (byte)c).ToArray();
-            //var passSalt = salt.Select(c => (byte)c).ToArray();
-
-
-            //byte[] = resultdoc.GetValue("PasswordHash");
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
                 return BadRequest("Bad user name or password.");
