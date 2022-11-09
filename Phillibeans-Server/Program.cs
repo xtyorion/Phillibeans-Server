@@ -15,8 +15,13 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
-builder.Services.AddSingleton<PhillibeansDbContext>(new PhillibeansDbContext());
+builder.Services.AddSingleton(new PhillibeansDbContext());
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<SolutionsRepository>();
+builder.Services.AddScoped<LanguageRepository>();
+builder.Services.AddScoped<ChallengeTypesRepository>();
+builder.Services.AddScoped<ChallengeRepository>();
+builder.Services.AddScoped<ChallengeCategoriesRepository>();
 builder.Services.AddControllers();
 
 var app = builder.Build();

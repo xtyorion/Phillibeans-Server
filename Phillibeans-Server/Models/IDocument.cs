@@ -9,6 +9,5 @@ namespace Phillibeans_Server.Models
         [BsonRepresentation(BsonType.String)]
         ObjectId Id { get; set; }
 
-        DateTime CreatedAt { get; }
     }
 }

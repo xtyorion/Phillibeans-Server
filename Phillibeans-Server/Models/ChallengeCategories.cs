@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿
+using MongoDB.Bson;
 using System.Text.Json.Serialization;
 
 namespace Phillibeans_Server.Models
@@ -8,17 +9,11 @@ namespace Phillibeans_Server.Models
         [JsonPropertyName("id")]
         public ObjectId Id { get; set; }
 
-        [JsonPropertyName("createdat")]
-        public DateTime CreatedAt => Id.CreationTime;
-        public int idCat { get; set; }
+        [JsonPropertyName("ChallengeCatId")]
+        public int ChallengeCatId { get; set; }
+
+        [JsonPropertyName("ChallengeName")]
         public string ChallengeName { get; set; }
 
-
-        static int NextId = 0;
-
-        public ChallengeCategories()
-        {
-            idCat = NextId++;
-        }
     }
 }

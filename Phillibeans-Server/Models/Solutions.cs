@@ -5,24 +5,25 @@ namespace Phillibeans_Server.Models
 {
     public class Solutions : IDocument
     {
-
         [JsonPropertyName("id")]
         public ObjectId Id { get; set; }
 
-        [JsonPropertyName("createdat")]
-        public DateTime CreatedAt => Id.CreationTime;
+        [JsonPropertyName("SolutionId")]
         public int SolutionId { get; set; }
+
+        [JsonPropertyName("Challengeid")]
         public int Challengeid { get; set; }
-        public string vidSolutionURL { get; set; }
+
+        [JsonPropertyName("vidSolutionURL")]
+        public string? vidSolutionURL { get; set; }
+
+        [JsonPropertyName("LangTypeId")]
         public int LangTypeId { get; set; }
-        public string SolutionCode { get; set; }
 
-        static int NextId = 0;
+        [JsonPropertyName("SolutionCode")]
+        public string? SolutionCode { get; set; }
 
-        public Solutions()
-        {
-            SolutionId = NextId++;
-        }
+       
 
     }
 }

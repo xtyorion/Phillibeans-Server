@@ -8,19 +8,20 @@ namespace Phillibeans_Server.Models
         [JsonPropertyName("id")]
         public ObjectId Id { get; set; }
 
-        [JsonPropertyName("createdat")]
-        public DateTime CreatedAt => Id.CreationTime;
+        [JsonPropertyName("ChallengeId")]
         public int ChallengeId { get; set; }
+
+
+        [JsonPropertyName("idChallengeCatName)]
         public string ChallengeCatName { get; set; }
+
+        [JsonPropertyName("typeID")]
         public int typeID { get; set; }
+
+        [JsonPropertyName("catID")]
         public int catID { get; set; }
 
-        static int NextId = 0;
-
-        public Challenges()
-        {
-            ChallengeId = NextId++;
-        }
+       
 
     }
 }
