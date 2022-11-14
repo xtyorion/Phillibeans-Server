@@ -13,10 +13,9 @@ namespace Phillibeans_Server
 {
     public class PhillibeansDbContext
     {
-
-        MongoClient dbClient = new MongoClient(
-            "mongodb+srv://vincentmejorada:DSOeKZqlqLreqELZ@cluster0.nwuby.mongodb.net/?retryWrites=true&w=majority" // justin's database
-            );
+        private string _curColName;
+        //MongoClient dbClient = new MongoClient("mongodb+srv://vincentmejorada:DSOeKZqlqLreqELZ@cluster0.nwuby.mongodb.net/?retryWrites=true&w=majority");
+        MongoClient dbClient = new MongoClient("mongodb+srv://xxx_fanshaweonline:qwerty123214@cluster0.xzndl.mongodb.net/test?retryWrites=true&w=majority");
         private IMongoDatabase database;
         private IMongoCollection<BsonDocument> collection;
 
@@ -32,7 +31,13 @@ namespace Phillibeans_Server
         }
         public void setCollection(string str)
         {
-            collection = database.GetCollection<BsonDocument>("User");
+            collection = database.GetCollection<BsonDocument>(str);
+            this._curColName = str;
+        }
+
+        public string getCollectionName()
+        {
+            return this._curColName;
         }
 
         public int Add(BsonDocument doc)
@@ -44,10 +49,20 @@ namespace Phillibeans_Server
 
         public List<BsonDocument> findAll()
         {
-        List<BsonDocument> documents = collection.Find(new BsonDocument()).ToList();
-        foreach (BsonDocument doc in documents)
-        {
-                var item = BsonSerializer.Deserialize<User>(doc);
+            List<BsonDocument> documents = collection.Find(new BsonDocument()).ToList();
+            foreach (BsonDocument doc in documents)
+            {
+                IDocument item = null;
+                switch (this._curColName)
+                {
+                    case "User":
+                        item = BsonSerializer.Deserialize<User>(doc);
+                        break;
+                    case "Challenges":
+                        item = BsonSerializer.Deserialize<Challenges>(doc);
+                        break;
+
+                }
                 Console.WriteLine(item);
                 Console.WriteLine(doc);
             }

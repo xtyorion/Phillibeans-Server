@@ -16,7 +16,7 @@ namespace Phillibeans_Server.Data.Repositories
         public LanguageRepository(PhillibeansDbContext db)
         {
             this._db = db;
-            _db.setCollection("Language");
+           
         }
 
         public IEnumerable<BsonDocument> GetAll()
@@ -51,7 +51,10 @@ namespace Phillibeans_Server.Data.Repositories
             return Result;
         }
 
-
+        public void setCollection(string col)
+        {
+            _db.setCollection(col);
+        }
     }
 
 

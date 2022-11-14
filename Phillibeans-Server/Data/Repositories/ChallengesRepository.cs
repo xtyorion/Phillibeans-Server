@@ -36,7 +36,9 @@ namespace Phillibeans_Server.Data.Repositories
 
         public BsonDocument Insert(IDocument entity)
         {
-            throw new NotImplementedException();
+            var challenge = entity.ToBsonDocument();
+            _db.Add(challenge);
+            return challenge;
         }
 
         public int Delete(BsonDocument doc)
@@ -51,7 +53,10 @@ namespace Phillibeans_Server.Data.Repositories
             return Result;
         }
 
-
+        public void setCollection(string col)
+        {
+            _db.setCollection(col);
+        }
     }
 
 

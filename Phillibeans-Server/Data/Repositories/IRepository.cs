@@ -13,5 +13,7 @@ namespace Phillibeans_Server.Data.Repositories
        BsonDocument Insert(IDocument entity);
 
        int Delete(BsonDocument doc);
+
+        void setCollection(string col);
     }
 }

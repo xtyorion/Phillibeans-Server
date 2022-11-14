@@ -13,17 +13,15 @@ namespace Phillibeans_Server
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly PhillibeansDbContext _db;
         private readonly UserRepository _userRepository;
 
-        public UserController(PhillibeansDbContext db, UserRepository userRepository)
+        public UserController(UserRepository userRepository)
         {
-            this._db = db;
             this._userRepository = userRepository;
-            db.setCollection("User");
+            this._userRepository.setCollection("User");
         }
 
-        string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        //string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         [HttpGet]
         [Route("{id}")]
         public Task<string> GetAsync([FromRoute] int id)
@@ -31,7 +29,6 @@ namespace Phillibeans_Server
             var userDoc = _userRepository.GetById(id);
             var user = BsonSerializer.Deserialize<User>(userDoc).ToJson();
             return Task.FromResult(user);
-
         }
 
 

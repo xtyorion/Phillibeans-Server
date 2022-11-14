@@ -38,6 +38,9 @@ namespace Phillibeans_Server.Models
         [JsonPropertyName("imageURL")]
         public string ImageURL { get; set; }
 
+        [JsonPropertyName("ChallengeList")]
+        public List<Challenges> Challenges { get; set; }
+
 
     }
 

@@ -16,7 +16,6 @@ namespace Phillibeans_Server.Data.Repositories
         public UserRepository(PhillibeansDbContext db)
         {
             this._db = db;
-            _db.setCollection("User");
         }
 
         public IEnumerable<BsonDocument> GetAll()
@@ -51,7 +50,10 @@ namespace Phillibeans_Server.Data.Repositories
             return Result;
         }
 
-
+        public void setCollection(string str)
+        {
+            _db.setCollection(str);
+        }
     }
 
 

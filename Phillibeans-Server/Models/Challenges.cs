@@ -12,7 +12,7 @@ namespace Phillibeans_Server.Models
         public int ChallengeId { get; set; }
 
 
-        [JsonPropertyName("idChallengeCatName)]
+        [JsonPropertyName("idChallengeCatName")]
         public string ChallengeCatName { get; set; }
 
         [JsonPropertyName("typeID")]
@@ -21,7 +21,7 @@ namespace Phillibeans_Server.Models
         [JsonPropertyName("catID")]
         public int catID { get; set; }
 
-       
-
+        [JsonPropertyName("Completed")]
+        public bool Completed { get; set; }
     }
 }

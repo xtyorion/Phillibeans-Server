@@ -4,6 +4,23 @@
 		"email": "email22@123.com",
 		"password": "password2",
 		"createdAt": "10-17-2023",
-		"imageURL": "dir/image/name"
+		"imageURL": "dir/image/name",
+		"UserChallengeList": [
+			{
+				"id": 0,
+				"ChallengeCatName": "Challenge 1",
+				"typeID": 0,
+				"catID": 0,
+				"Completed": false
+			},
+			{
+				"id": 1,
+				"ChallengeCatName": "Challenge 2",
+				"typeID": 0,
+				"catID": 0,
+				"Completed": true
+			}
+
+		]
 	}
 }

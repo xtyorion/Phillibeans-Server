@@ -27,7 +27,6 @@ namespace Phillibeans_Server.Controllers
         public async Task<ActionResult<User>> Register(UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            user.Name = request.Name;
             user.Email = request.Email;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;

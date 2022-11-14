@@ -16,6 +16,7 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 }));
 
 builder.Services.AddSingleton(new PhillibeansDbContext());
+//builder.Services.AddScoped<IRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<SolutionsRepository>();
 builder.Services.AddScoped<LanguageRepository>();

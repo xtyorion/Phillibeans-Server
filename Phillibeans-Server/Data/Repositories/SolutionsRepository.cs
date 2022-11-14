@@ -51,6 +51,11 @@ namespace Phillibeans_Server.Data.Repositories
             return Result;
         }
 
+        public void setCollection(string col)
+        {
+            _db.setCollection(col);
+        }
+
 
     }
 
