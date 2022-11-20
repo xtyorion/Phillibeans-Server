@@ -29,8 +29,8 @@ namespace Phillibeans_Server.Data.Repositories
 {
 
             var filter = Builders<BsonDocument>.Filter.Eq("ChallengeId", id);
-            var user = _db.getCollection().Find(filter).FirstOrDefault();
-            return user;
+            var challenge = _db.getCollection().Find(filter).FirstOrDefault();
+            return challenge;
 
         }
 

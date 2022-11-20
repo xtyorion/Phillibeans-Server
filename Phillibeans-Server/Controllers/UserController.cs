@@ -6,6 +6,8 @@ using Phillibeans_Server.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson.Serialization;
 using Phillibeans_Server.Data.Repositories;
+using System.IdentityModel.Tokens.Jwt;
+using Newtonsoft.Json.Linq;
 
 namespace Phillibeans_Server
 {
@@ -32,7 +34,24 @@ namespace Phillibeans_Server
             return Task.FromResult(user);
         }
 
+        [HttpGet]
+        [Route("")]
+        public Task<List<User>> GetAllAsync()
+        {
+            var userDocs = _userRepository.GetAll();
+            var users = userDocs.Select(v => BsonSerializer.Deserialize<User>(v)).ToList();
+            return Task.FromResult(users);
+        }
 
+        [HttpPut]
+        [Route("{id}/{key}")]
+        public Task<long> Update([FromRoute] string id, [FromRoute] string key, [FromBody] string value)
+        {
+            var userId = new ObjectId(id);
+            var result = _userRepository.Update(userId, key, value);
+            return Task.FromResult(result);
+
+        }
         //[HttpPost]
         //public int Post()
         //{
