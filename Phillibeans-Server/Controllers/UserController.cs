@@ -24,9 +24,10 @@ namespace Phillibeans_Server
         //string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         [HttpGet]
         [Route("{id}")]
-        public Task<string> GetAsync([FromRoute] int id)
+        public Task<string> GetAsync([FromRoute] string id)
         {
-            var userDoc = _userRepository.GetById(id);
+            var userId = new ObjectId(id);
+            var userDoc = _userRepository.GetById(userId);
             var user = BsonSerializer.Deserialize<User>(userDoc).ToJson();
             return Task.FromResult(user);
         }

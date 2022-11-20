@@ -3,10 +3,14 @@ using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Phillibeans_Server.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Phillibeans_Server.Controllers
@@ -63,7 +67,9 @@ namespace Phillibeans_Server.Controllers
                 return BadRequest("Bad user name or password.");
             }
             string token = CreateToken(user);
-            return Ok(token);
+            var dotNetObj = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+
+            return Ok(new { token = token, user = dotNetObj });
         }
 
         private string CreateToken(User user)

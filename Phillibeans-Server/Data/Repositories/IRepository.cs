@@ -8,12 +8,12 @@ namespace Phillibeans_Server.Data.Repositories
     {
        IEnumerable<BsonDocument> GetAll();
 
-       BsonDocument GetById(int id);
+       BsonDocument GetById(ObjectId id);
 
        BsonDocument Insert(IDocument entity);
 
        int Delete(BsonDocument doc);
 
-        void setCollection(string col);
+       void setCollection(string col);
     }
 }

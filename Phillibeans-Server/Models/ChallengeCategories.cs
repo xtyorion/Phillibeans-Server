@@ -9,11 +9,8 @@ namespace Phillibeans_Server.Models
         [JsonPropertyName("id")]
         public ObjectId Id { get; set; }
 
-        [JsonPropertyName("ChallengeCatId")]
-        public int ChallengeCatId { get; set; }
-
-        [JsonPropertyName("ChallengeName")]
-        public string ChallengeName { get; set; }
+        [JsonPropertyName("Name")]
+        public string? Name { get; set; }
 
     }
 }

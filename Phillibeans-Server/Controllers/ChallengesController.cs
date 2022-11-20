@@ -26,15 +26,16 @@ namespace Phillibeans_Server.Controllers
         public Task<List<Challenges>> GetAll()
         {
             var challengeDoc = _ChallengesRepository.GetAll();
-            var challenge = BsonSerializer.Deserialize<List<Challenges>>((BsonDocument)challengeDoc);
+            var challenge = challengeDoc.Select(v=>BsonSerializer.Deserialize<Challenges>(v)).ToList();
             return Task.FromResult(challenge);
-        }
+        } 
 
         [HttpGet]
         [Route("{id}")]
-        public Task<string> GetAsync([FromRoute] int id)
+        public Task<string> GetAsync([FromRoute] string id)
         {
-            var challengeDoc = _ChallengesRepository.GetById(id);
+            var challengeId = new ObjectId(id);
+            var challengeDoc = _ChallengesRepository.GetById(challengeId);
             var challenge = BsonSerializer.Deserialize<User>(challengeDoc).ToJson();
             return Task.FromResult(challenge);
         }

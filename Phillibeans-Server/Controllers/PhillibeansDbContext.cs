@@ -14,8 +14,8 @@ namespace Phillibeans_Server
     public class PhillibeansDbContext
     {
         private string _curColName;
-        //MongoClient dbClient = new MongoClient("mongodb+srv://vincentmejorada:DSOeKZqlqLreqELZ@cluster0.nwuby.mongodb.net/?retryWrites=true&w=majority");
-        MongoClient dbClient = new MongoClient("mongodb+srv://xxx_fanshaweonline:qwerty123214@cluster0.xzndl.mongodb.net/test?retryWrites=true&w=majority");
+        MongoClient dbClient = new MongoClient("mongodb+srv://vincentmejorada:DSOeKZqlqLreqELZ@cluster0.nwuby.mongodb.net/?retryWrites=true&w=majority");
+        /*MongoClient dbClient = new MongoClient("mongodb+srv://xxx_fanshaweonline:qwerty123214@cluster0.xzndl.mongodb.net/test?retryWrites=true&w=majority");*/
         private IMongoDatabase database;
         private IMongoCollection<BsonDocument> collection;
 

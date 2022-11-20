@@ -23,6 +23,7 @@ builder.Services.AddScoped<LanguageRepository>();
 builder.Services.AddScoped<ChallengeTypesRepository>();
 builder.Services.AddScoped<ChallengeRepository>();
 builder.Services.AddScoped<ChallengeCategoriesRepository>();
+builder.Services.AddScoped<UserChallengeRepository>();
 builder.Services.AddControllers();
 
 var app = builder.Build();

@@ -24,8 +24,13 @@ namespace Phillibeans_Server.Data.Repositories
             var result = _db.findAll().ToList();
             return result;
         }
-
-        public BsonDocument GetById(int id)
+        public BsonDocument GetChallengeCategory(string name)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("Name", name);
+            var item = _db.getCollection().Find(filter).FirstOrDefault();
+            return item;
+        }
+        public BsonDocument GetById(ObjectId id)
 {
 
             var filter = Builders<BsonDocument>.Filter.Eq("ChallengeCatId", id);
@@ -36,8 +41,11 @@ namespace Phillibeans_Server.Data.Repositories
 
         public BsonDocument Insert(IDocument entity)
         {
-            throw new NotImplementedException();
+            var category = entity.ToBsonDocument();
+            _db.Add(category);
+            return category;
         }
+
 
         public int Delete(BsonDocument doc)
         {

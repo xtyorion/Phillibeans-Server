@@ -24,10 +24,10 @@ namespace Phillibeans_Server.Data.Repositories
             return result;
         }
 
-        public BsonDocument GetById(int id)
+        public BsonDocument GetById(ObjectId id)
 {
 
-            var filter = Builders<BsonDocument>.Filter.Eq("UserId", id);
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
             var user = _db.getCollection().Find(filter).FirstOrDefault();
             return user;
 

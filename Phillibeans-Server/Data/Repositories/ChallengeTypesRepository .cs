@@ -25,7 +25,7 @@ namespace Phillibeans_Server.Data.Repositories
             return result;
         }
 
-        public BsonDocument GetById(int id)
+        public BsonDocument GetById(ObjectId id)
 {
 
             var filter = Builders<BsonDocument>.Filter.Eq("ChallengeTypeId", id);

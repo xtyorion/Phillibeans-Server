@@ -14,6 +14,8 @@ namespace Phillibeans_Server.Models
     public class User : IDocument   
     {
         public static int nextId = 0;
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         [JsonPropertyName("id")]
         public ObjectId Id { get; set; }
 
@@ -39,7 +41,7 @@ namespace Phillibeans_Server.Models
         public string ImageURL { get; set; }
 
         [JsonPropertyName("ChallengeList")]
-        public List<Challenges> Challenges { get; set; }
+        public List<ObjectId> Challenges { get; set; }
 
 
     }
