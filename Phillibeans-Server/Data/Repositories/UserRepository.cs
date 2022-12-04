@@ -7,6 +7,9 @@ using MongoDB.Bson.Serialization;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharpCompress.Common;
+using Newtonsoft.Json.Linq;
+using static System.Net.Mime.MediaTypeNames;
+using Newtonsoft.Json;
 
 namespace Phillibeans_Server.Data.Repositories 
 {
@@ -36,6 +39,13 @@ namespace Phillibeans_Server.Data.Repositories
         public BsonDocument Insert(BsonDocument entity)
         {
             throw new NotImplementedException();
+        }
+
+        public long Update(ObjectId id, string key, string value)
+        {
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+            var result = _db.UpdateOne(filter, key, value);
+            return result;
         }
 
         public int Delete(BsonDocument doc)
