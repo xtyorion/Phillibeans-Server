@@ -20,11 +20,19 @@ namespace Phillibeans_Server.Controllers
 
         [HttpGet]
         [Route("")]
-        public Task<List<ChallengeCategories>> GetAll()
+        public ActionResult GetAll()
         {
-            var challengeDoc = _ChallengeCategoryRepository.GetAll();
-            var challenge = challengeDoc.Select(v => BsonSerializer.Deserialize<ChallengeCategories>(v)).ToList();
-            return Task.FromResult(challenge);
+            List<ChallengeCategories>? challenge = null;
+            try
+            {
+                var challengeDoc = _ChallengeCategoryRepository.GetAll();
+                challenge = challengeDoc.Select(v => BsonSerializer.Deserialize<ChallengeCategories>(v)).ToList();
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Json(challenge);
         }
         [HttpPost]
         public async Task<ActionResult<ChallengeCategories>> InsertCategory(ChallengeCategoryDto request)
@@ -32,11 +40,15 @@ namespace Phillibeans_Server.Controllers
             var challengeCatDoc = _ChallengeCategoryRepository.GetChallengeCategory(request.Name);
             if(challengeCatDoc == null)
             {
-                var doc = new BsonDocument {  };
-                _ChallengeCategoryRepository.Insert((IDocument)doc);
+                var cat = new ChallengeCategories();
+                cat.Id = new ObjectId().ToString();
+                cat.Name = request.Name;
+                var doc = new BsonDocument { cat.ToBsonDocument() };
+                _ChallengeCategoryRepository.Insert(doc);
                 return Ok();
             }
             return BadRequest("Item already exists.");
         }
+      
     }
 }

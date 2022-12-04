@@ -1,6 +1,7 @@
 ﻿// Root myDeserializedClass = JsonSerializer.Deserialize<Root>(myJsonResponse);
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
 using System.Text.Json.Serialization;
 
 namespace Phillibeans_Server.Models
@@ -14,16 +15,16 @@ namespace Phillibeans_Server.Models
     public class User : IDocument   
     {
         public static int nextId = 0;
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         [JsonPropertyName("id")]
-        public ObjectId Id { get; set; }
+        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
 
         [JsonPropertyName("userid")]
         public int UserId = nextId++;
 
-        [JsonPropertyName("createdat")]
-        public DateTime CreatedAt => Id.CreationTime;
+      // [JsonPropertyName("createdat")]
+       // public DateTime CreatedAt => Id.CreationTime;
 
         [JsonPropertyName("name")]
         public string Name { get; set; }

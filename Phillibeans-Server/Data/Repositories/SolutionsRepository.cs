@@ -56,7 +56,10 @@ namespace Phillibeans_Server.Data.Repositories
             _db.setCollection(col);
         }
 
-
+        public BsonDocument Insert(BsonDocument entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 

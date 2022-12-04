@@ -10,7 +10,7 @@ namespace Phillibeans_Server.Data.Repositories
 
        BsonDocument GetById(ObjectId id);
 
-       BsonDocument Insert(IDocument entity);
+       BsonDocument Insert(BsonDocument entity);
 
        int Delete(BsonDocument doc);
 

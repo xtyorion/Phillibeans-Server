@@ -7,6 +7,7 @@ using MongoDB.Bson.Serialization;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharpCompress.Common;
+using static MongoDB.Bson.Serialization.Serializers.SerializerHelper;
 
 namespace Phillibeans_Server.Data.Repositories 
 {
@@ -33,17 +34,29 @@ namespace Phillibeans_Server.Data.Repositories
         public BsonDocument GetById(ObjectId id)
 {
 
-            var filter = Builders<BsonDocument>.Filter.Eq("ChallengeCatId", id);
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
             var user = _db.getCollection().Find(filter).FirstOrDefault();
             return user;
 
         }
 
-        public BsonDocument Insert(IDocument entity)
+        public BsonDocument Insert(BsonDocument entity)
         {
             var category = entity.ToBsonDocument();
             _db.Add(category);
             return category;
+        }
+        public BsonDocument InsertChallenge(BsonDocument entity, ObjectId categoryID)
+        {
+            var challenge = entity.ToBsonDocument();
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", categoryID);
+
+            var pushCountryDefinition = Builders<BsonDocument>
+            .Update.Push("Challenges", challenge);
+
+            _db.getCollection().UpdateOneAsync(filter, pushCountryDefinition);
+
+            return challenge;
         }
 
 

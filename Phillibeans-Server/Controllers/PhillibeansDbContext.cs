@@ -142,6 +142,10 @@ namespace Phillibeans_Server
                 "Delete Failed");
         }
 
+        public IMongoDatabase getMongo()
+        {
+            return database;
+        }
 
     }
 }

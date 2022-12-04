@@ -1,4 +1,6 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
 using System.Text.Json.Serialization;
 
 namespace Phillibeans_Server.Models
@@ -6,13 +8,9 @@ namespace Phillibeans_Server.Models
     public class Solutions : IDocument
     {
         [JsonPropertyName("id")]
-        public ObjectId Id { get; set; }
-
-        [JsonPropertyName("SolutionId")]
-        public int SolutionId { get; set; }
-
-        [JsonPropertyName("Challengeid")]
-        public int Challengeid { get; set; }
+        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
 
         [JsonPropertyName("vidSolutionURL")]
         public string? vidSolutionURL { get; set; }

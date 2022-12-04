@@ -33,7 +33,7 @@ namespace Phillibeans_Server.Data.Repositories
 
         }
 
-        public BsonDocument Insert(IDocument entity)
+        public BsonDocument Insert(BsonDocument entity)
         {
             throw new NotImplementedException();
         }

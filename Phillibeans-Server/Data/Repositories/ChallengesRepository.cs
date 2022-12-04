@@ -33,12 +33,32 @@ namespace Phillibeans_Server.Data.Repositories
             return user;
 
         }
-
-        public BsonDocument Insert(IDocument entity)
+        public BsonDocument GetByName(string name)
         {
-            var challenge = entity.ToBsonDocument();
+
+            var filter = Builders<BsonDocument>.Filter.Eq("Name", Name);
+            var user = _db.getCollection().Find(filter).FirstOrDefault();
+            return user;
+
+        }
+
+        public BsonDocument Insert(BsonDocument entity)
+        {
+            var challenge = entity;
             _db.Add(challenge);
             return challenge;
+        }
+
+        public BsonDocument AppendToCategories(BsonDocument entity, string CategoryID)
+        {
+            var Categories = _db.getMongo().GetCollection<BsonDocument>("ChallengeCategories");
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", new ObjectId(CategoryID));
+
+            var pushCountryDefinition = Builders<BsonDocument>
+           .Update.Push("Challenges", entity);
+
+            Categories.UpdateOneAsync(filter, pushCountryDefinition);
+            return entity;
         }
 
         public int Delete(BsonDocument doc)

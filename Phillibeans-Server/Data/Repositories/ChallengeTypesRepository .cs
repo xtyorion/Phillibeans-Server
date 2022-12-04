@@ -34,9 +34,17 @@ namespace Phillibeans_Server.Data.Repositories
 
         }
 
-        public BsonDocument Insert(IDocument entity)
+        public BsonDocument GetChallengeType(string name)
         {
-            throw new NotImplementedException();
+            var filter = Builders<BsonDocument>.Filter.Eq("Name", name);
+            return _db.getCollection().Find(filter).FirstOrDefault();
+        }
+
+        public BsonDocument Insert(BsonDocument entity)
+        {
+            var type = entity.ToBsonDocument();
+            _db.Add(type);
+            return type;
         }
 
         public int Delete(BsonDocument doc)

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Phillibeans_Server.Models;
+using System.Reflection.Metadata;
 
 namespace Phillibeans_Server.Data.Repositories
 {
@@ -13,10 +15,23 @@ namespace Phillibeans_Server.Data.Repositories
             this._db = db;
         }
 
-        public BsonDocument GetUserChallenge(ObjectId id, ObjectId challenge_id)
+        public IEnumerable<BsonDocument> GetAllById(string id)
         {
             var builder = Builders<BsonDocument>.Filter;
-            var filter = builder.Eq("Challenge_Id", id) & builder.Eq("User_Id", challenge_id);
+            ObjectId user_id = new ObjectId(id);
+            var filter = builder.Eq("User_Id", user_id);
+            var docs = _db.getCollection().Find(filter).ToList();
+
+            return docs;
+        }
+
+        public BsonDocument GetUserChallenge(string user_id, string challenge_id)
+        {
+
+            var challengeId = new ObjectId(challenge_id);
+            var userId = new ObjectId(user_id);
+            var builder = Builders<BsonDocument>.Filter;
+            var filter = builder.Eq("Challenge_Id", challengeId) & builder.Eq("User_Id", userId);
             var doc = _db.getCollection().Find(filter).FirstOrDefault();
 
             return doc;
@@ -34,6 +49,23 @@ namespace Phillibeans_Server.Data.Repositories
                 return doc;
             }
             return doc;
+        }
+
+        public void Update(BsonDocument doc, Challenges_Users item)
+        {
+            if (doc != null)
+            {
+                var builder = Builders<BsonDocument>.Filter;
+                var filter = builder.Eq("Challenge_Id", new ObjectId(item.Challenge_Id)) & builder.Eq("User_Id", new ObjectId(item.User_Id));
+                var update = Builders<BsonDocument>.Update.Set("Status", item.Status);
+                
+                foreach (BsonElement el in doc)
+                {
+                    update = update.Set(el.Name, el.Value);
+                }
+
+                var result = _db.getCollection().UpdateOne(filter, update);
+            }
         }
 
         public int Delete(BsonDocument doc)

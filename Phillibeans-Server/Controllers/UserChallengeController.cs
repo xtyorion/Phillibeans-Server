@@ -10,7 +10,7 @@ namespace Phillibeans_Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserChallengeController : ControllerBase
+    public class UserChallengeController : Controller
     {
         public static Challenges_Users userChallenge = new Challenges_Users();
         private readonly UserChallengeRepository _userChallengeRepository;
@@ -24,13 +24,17 @@ namespace Phillibeans_Server.Controllers
         [HttpPost("UpdateUserChallenge")]
         public async Task<ActionResult<Challenges_Users>> UpdateUserChallenge(Challenges_Users_Dto request)
         {
-            var challengeId = new ObjectId(request.ChallengeId);
-            var userId = new ObjectId(request.Id);
 
-            var userChallengeDoc = _userChallengeRepository.GetUserChallenge(userId, challengeId);
-           
-            userChallenge.Challenge_Id = challengeId;
-            userChallenge.User_Id = userId;
+            var userChallengeDoc = _userChallengeRepository.GetUserChallenge(request.User_Id, request.Challenge_Id);
+            
+            userChallenge.Challenge_Id = request.Challenge_Id;
+            userChallenge.Id = new ObjectId().ToString();
+            if (request._id != "")
+                userChallenge.Id = request._id;
+            
+            userChallenge.User_Id = request.User_Id;
+            userChallenge.Status = request.Status;
+       
             var doc = new BsonDocument { userChallenge.ToBsonDocument() };
            
 
@@ -41,12 +45,21 @@ namespace Phillibeans_Server.Controllers
             }
             else
             {
-               // _userChallengeRepository.Update(doc);
+                
+               _userChallengeRepository.Update(doc, userChallenge);
             }
             //update or add
 
-            return BadRequest(userChallenge);
+            return Ok(userChallenge);
 
+        }
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult GetAllById([FromRoute] string id)
+        {
+            var challengeDoc = _userChallengeRepository.GetAllById(id);
+            var challenge = challengeDoc.Select(v => BsonSerializer.Deserialize<Challenges_Users>(v)).ToList();
+            return Json(challenge);
         }
     }
 }

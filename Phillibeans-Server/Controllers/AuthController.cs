@@ -34,6 +34,7 @@ namespace Phillibeans_Server.Controllers
             user.Email = request.Email;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            user.Id = new ObjectId().ToString();
 
             var doc = new BsonDocument { user.ToBsonDocument() };
             _db.setCollection("User");
@@ -54,22 +55,27 @@ namespace Phillibeans_Server.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
-            string email = request.Email;
-            _db.setCollection("User");
-            var filter = Builders<BsonDocument>.Filter.Eq("Email", email);
-            var resultdoc = _db.getCollection().Find(filter).FirstOrDefault();
-            
-
-            user = BsonSerializer.Deserialize<User>(resultdoc);
-           
-            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            try
             {
-                return BadRequest("Bad user name or password.");
-            }
-            string token = CreateToken(user);
-            var dotNetObj = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+                string email = request.Email;
+                _db.setCollection("User");
+                var filter = Builders<BsonDocument>.Filter.Eq("Email", email);
+                var resultdoc = _db.getCollection().Find(filter).FirstOrDefault();
 
-            return Ok(new { token = token, user = dotNetObj });
+
+                user = BsonSerializer.Deserialize<User>(resultdoc);
+
+                if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+                {
+                    return BadRequest("Bad user name or password.");
+                }
+                string token = CreateToken(user);
+                var dotNetObj = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+
+                return Ok(new { token = token, user = dotNetObj });
+            }
+            catch (Exception e) { }
+            return BadRequest();
         }
 
         private string CreateToken(User user)
