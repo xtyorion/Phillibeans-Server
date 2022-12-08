@@ -44,8 +44,9 @@ namespace Phillibeans_Server.Data.Repositories
         public long Update(ObjectId id, string key, string value)
         {
             var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
-            var result = _db.UpdateOne(filter, key, value);
-            return result;
+            //var result = _db.UpdateOne(filter, key, value);
+            //return result;
+            return 0;
         }
 
         public int Delete(BsonDocument doc)
